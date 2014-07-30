@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html ng-app><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>Print Paper Habits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+
+
+
+</head>
+<body ng-controller="MainCtrl" ng-class="{'print':doPrint,'noprint':!doPrint}">
+
+
+
+  <div class="container ">
+
+    <div class="row noprint step1" ng-show="ctrl.step==1">
+      <div class="col-md-6 col-md-offset-3 panel-default">
+
+        <h1 class="margin-base-vertical">An offline habit tracking sheet to be pinned on your fridge.</h1>
+
+        <div id=div_papersheet>
+<table>
+  <tr>
+    <td></td>
+    <td class=td_spacer></td>
+    <td><h1>{{currentMonth}}</h1></td>
+  </tr>
+  <tr>
+    <td class="td_name">{{nameDemo}}</td>
+    <td class=td_spacer></td>
+    <td>
+<table class="table_days">
+  <tr>
+    <td ng-repeat="day in daysInMonth track by $index">{{$index+1}}</td>
+  </tr>
+</table>
+
+
+    </td>
+  </tr>
+  <tr class="td_third">
+    <td>
+<table class="table_habits">
+  <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+    <td ng-class="{'first':$first}">{{habit}}</td>
+  </tr>
+</table>
+    </td>
+    <td class=td_spacer></td>
+    <td>
+<table class="table_checkboxes">
+  <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+    <td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
+  </tr>
+</table>
+    </td>
+  </tr>
+
+
+</table>
+        </div>
+
+         <p class="text-center p-next-button">
+           <button type="button" ng-click="clear();ctrl.step=2" class="btn btn-success btn-lg">Create your own</button>
+         </p>
+
+      </div><!-- //main content -->
+    </div><!-- //row -->
+
+    <div class="row noprint" ng-show="ctrl.step==2">
+      <div class="col-md-6 col-md-offset-3 panel panel-default">
+
+        <h1 class="margin-base-vertical">
+          Setup your goals!
+        </h1>
+		<ul class="nav nav-tabs">
+		  <li ng-class="{active:activeUser==$index}" 
+		      ng-click="activateUser($index)"
+		      ng-repeat="user in users track by $index"><a href="" >
+				{{users[$index].name ||'Somebody'}}
+			  </a></li>
+		</ul>
+
+        <form class="margin-base-vertical">
+          <p>
+            <strong>Step #1</strong> Enter up to 5 habits you want to develop this month. Keep it brief!
+          </p>
+          <p class="input-group" ng-repeat="habit in users[activeUser].habits track by $index" ng-show="$index==0 || users[activeUser].habits[$index-1]!=''">
+            <span class="input-group-addon"><span class="icon-check"></span></span>
+            <input maxlength="20" ng-trim="true" ng-maxlength="20" ng-model="users[activeUser].habits[$index]" type="text" class="form-control input-lg" placeholder="{{placeholders[$index]}}">
+			<span class="input-group-addon">{{20-users[activeUser].habits[$index].length}}</span>
+          </p>
+          
+          <p>
+            <strong>Step #2</strong> Enter your nick, so everyone know it's your piece of paper.
+          </p>
+
+          
+          <p class="input-group">
+            <span class="input-group-addon"><span class="icon-user"></span></span>
+            <input maxlength="15" type="text" class="form-control input-lg" ng-model="users[activeUser].name" placeholder="Your nickname...">
+          </p>
+          
+          <p class="help-block text-center"><small>Yeah, you actually need those old school screen to paper interfaces.</small></p>
+          <p class="text-center">
+            <button type="button" ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
+			        ng-click="ctrl.step=3;doPrint=true" class="btn btn-success btn-lg">Print</button>
+            <button type="button" ng-click="addUser()" 
+			  ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
+			  class="btn btn-lg">Add person</button>
+          </p>
+          
+        </form>
+
+      </div><!-- //main content -->
+    </div><!-- //row -->
+
+
+
+    <div id="step3" class="row" ng-show="ctrl.step==3" ng-click="ctrl.step=2;doPrint=false">
+      <div  ng-class="{'col-md-8 col-md-offset-2 panel panel-default':!doPrint}">
+		<p class="alert alert-info hidden-print">
+			Ready to hit the print button. Click on the table to return to edit mode.
+		</p>
+
+        <div id=div_papersheet>
+		
+<table ng-repeat="user in users">
+  <tr>
+    <td></td>
+    <td class=td_spacer></td>
+    <td><h1 ng-show="$index==0">{{currentMonth}}</h1></td>
+  </tr>
+  <tr>
+    <td class="td_name">{{user.name}}</td>
+    <td class=td_spacer></td>
+    <td>
+		<table class="table_days">
+		  <tr>
+			<td  ng-repeat="day in daysInMonth track by $index">
+			 {{$index+1}}
+			</td>
+		  </tr>
+		</table>
+
+
+	</td>
+  </tr>
+  <tr class="td_third">
+	<td>
+		<table class="table_habits">
+		  <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
+			<td ng-class="{'first':$first}">{{habit}}</td>
+		  </tr>
+		</table>
+			</td>
+			<td class=td_spacer></td>
+			<td>
+		<table class="table_checkboxes">
+		  <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
+			<td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
+		  </tr>
+		</table>
+    </td>
+  </tr>
+</table>
+        </div>
+
+        <div class="margin-base-vertical onlyprint text-center">
+          <small class="text-muted">
+            Month over? Get your new sheet at <a href="http://discomo.de/paperhabits">http://discomo.de/paperhabits</a>.
+                
+          </small>
+        </div>
+
+
+        <div class="margin-base-vertical noprint">
+          <small class="text-muted">Created by Federico Elles</small>
+        </div>
+
+      </div><!-- //main content -->
+    </div><!-- //row -->
+  </div> <!-- //container -->
+
+  <script src="http://cdn.openkeyval.org/statics/openkeyval.packed.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+  <script>
+  function MainCtrl($scope) {
+    $scope.doPrint=false;
+
+	var months = new Array(12);
+	months[0] = "January";
+	months[1] = "February";
+	months[2] = "March";
+	months[3] = "April";
+	months[4] = "May";
+	months[5] = "June";
+	months[6] = "July";
+	months[7] = "August";
+	months[8] = "September";
+	months[9] = "October";
+	months[10] = "November";
+	months[11] = "December";	
+	
+	$scope.currentMonth = months[new Date().getMonth()];		
+    $scope.ctrl = {
+       step:1 //debug
+    };
+
+    $scope.placeholders = [
+      'A first habit...',
+      'It takes two to tango...',
+      'Third habit...',
+      'Oh, getting overconfident...',
+      'This must be the last one!'
+    ];
+    $scope.habitsDemo = ['5 min exercise','Learn chinese','No alcohol','',''];
+	$scope.nameDemo = 'You';
+
+
+	function daysInMonth() {
+	   var d = new Date();
+	   return 32 - new Date(d.getFullYear(), d.getMonth(), 32).getDate();
+	}
+
+    $scope.isWeekend = function(day){
+      var d = new Date();
+      d.setDate(day);
+      var weekday = d.getDay();
+      return (weekday == 6) || (weekday == 0); 
+    }
+	
+	var addUser = function(){
+		$scope.users.push({
+			name:'',
+			habits:['','','','','']
+		});	
+	};
+	
+	$scope.users = [];
+	if (localStorage.getItem('data')){
+		var stage = JSON.parse(localStorage.getItem('data'));
+		for (var i=0,ii=stage.length;i<ii;i+=1){
+			if (stage[i].name && stage[i].habits[0]){
+				$scope.users.push(stage[i]);
+			}
+		}		
+	}
+	
+	if ($scope.users.length==0){
+		addUser();
+	}
+	
+	
+	
+	$scope.activeUser=0;
+	
+	$scope.activateUser = function(id){
+		$scope.activeUser = id;
+	};
+	
+	$scope.addUser=function(){
+		if ($scope.users[$scope.activeUser].name != '' && $scope.users[$scope.activeUser].habits[0] != ''){
+			addUser();
+			$scope.activeUser = $scope.users.length-1;
+		}
+	};
+
+	$scope.$watch('ctrl.step',function(newval,oldval){
+		if (oldval) {
+			$scope.save();
+		}
+	});
+	
+	$scope.save = function(){
+	    //delete empty data
+
+		
+		var data = JSON.stringify($scope.users);
+		localStorage.setItem('data',data);
+		//remoteStorage.setItem('data', data, function(){
+		//	console.log('Data saved');
+		//});
+	}
+
+
+    $scope.daysInMonth =  new Array(daysInMonth());
+        
+  }
+  
+  </script>
+  
+</body></html>

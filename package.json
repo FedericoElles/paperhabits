@@ -1,0 +1,15 @@
+﻿{
+  "name": "folder_paperhabits",
+  "version": "0.0.1",
+  "description": "An offline habit tracking sheet to be pinned on your fridge.",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FedericoElles/paperhabits.git"
+  },
+  "author": "FedericoElles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FedericoElles/paperhabits/issues"
+  }
+}

@@ -1,0 +1,230 @@
+﻿
+/**********************************************************
+ *
+ * Welcome to FritzWebPutty OSS!
+ *
+ * Your CSS (or SCSS) goes here, in the editor pane.
+ * If you have existing CSS on your site, just copy
+ * and paste it here to get started. Enjoy!
+ *
+ *********************************************************/
+
+		/* http://css-tricks.com/perfect-full-page-background-image/ */
+		html {
+			background: transparent;
+			/*-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+            */
+			
+		}
+
+:root{-webkit-print-color-adjust:exact;print-color-adjust:exact;} 
+
+* {
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* force background colour printing in chrome browser */
+body, span, div, table, tr, tbody, tfoot, td, hr {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust:exact;
+}
+
+
+
+		body {
+            background: url(bg.jpg) no-repeat top center; 
+			padding-top: 60px;
+			font-size: 16px;
+			font-family: "Open Sans",serif;
+
+		}
+
+		h1 {
+			font-family: "Abel", Arial, sans-serif;
+			font-weight: 400;
+			font-size: 40px;
+		}
+
+body.print h1{
+  margin-top:0px;
+}
+
+body.print p.alert{
+  margin-bottom:0px;
+}
+
+		/* Override B3 .panel adding a subtly transparent background */
+		.panel {
+			background-color: rgba(255, 255, 255, 0.8);
+		}
+
+		.margin-base-vertical {
+			margin: 20px 0;
+		}
+
+body.print {
+  background: none;
+}
+
+body.print .noprint{
+  display:none;
+}
+
+
+body .onlyprint{
+  display:none;
+}
+
+body.print .onlyprint{
+  display:block;
+}
+
+
+.p-next-button{
+  position:relative;
+  top:-70px;
+}
+
+
+.step1 h1{
+  text-shadow: 1px 1px 4px #ffffff;
+  filter: dropshadow(color=#ffffff, offx=2, offy=2);
+}
+
+#div_papersheet{
+  padding:10px;
+  border:1px solid #EEE;
+  min-height:400px;
+  font-size:9px;
+  
+  width:600px;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+
+body.noprint #div_papersheet{
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  background-color:#FAFAFA;
+}
+
+body.print #div_papersheet{
+  width:100%;
+  border:0px;
+  font-size:14px;
+}
+
+#div_papersheet .td_spacer{
+  width:10px;
+}
+
+body.print #div_papersheet .td_spacer{
+  width:20px;
+}
+
+
+.p-next-button{
+
+}
+
+
+form {
+ background-color:white;
+ margin-top:0px !important;
+ padding:10px;
+ border: 1px solid #DDD;
+ border-top:0px solid white;
+}
+
+#div_papersheet .td_name{
+  text-align:right;
+  font-size:150%;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+#div_papersheet td{
+  vertical-align:bottom;
+}
+
+
+#div_papersheet .table_days{
+  font-color:#DDD;
+}
+
+#div_papersheet .table_days td{
+  width:15px;
+  vertical-align:bottom;
+  text-align:center;
+  color:#CCC;
+  border:1px solid #FFF;
+}
+
+body.print #div_papersheet .table_days td{
+  width:22px;
+}
+
+#div_papersheet .table_habits{
+  width:110px;
+  text-align:right;
+}
+
+body.print #div_papersheet .table_habits{
+  width:200px;
+}
+
+#div_papersheet .table_habits td{
+  border:1px solid #FFF;
+  line-height:12px;
+}
+
+body.print #div_papersheet .table_habits td{
+  border:1px solid #FFF;
+  line-height:20px;
+}
+
+#div_papersheet .table_habits td.first{
+   border-top:1px solid #BBB !important;
+}
+
+#div_papersheet .table_checkboxes{
+  font-color:grey;
+  border-collapse:collapse;  
+}
+
+#div_papersheet .table_checkboxes td{
+  width:15px;
+  border:1px solid #DDD;
+}
+
+#div_papersheet .table_checkboxes td.weekend{
+  background-color:#EEE;
+  background: url(cellbg.jpg);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+body.print #div_papersheet .table_checkboxes td.weekend::before{
+   content:"";
+   border-left:20px solid #EEE;
+   display:block;
+   height:20px;
+   position: absolute;
+   margin-left: 0px;
+   margin-top: 0px;
+}
+
+body.print #div_papersheet .table_checkboxes td{
+  width:22px;
+}
+
+/* Overwrite Bootstrap */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+ /*background-color:transparent;*/
+}
