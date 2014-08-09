@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html ng-app="PaperHabits"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   <title>Print Paper Habits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
@@ -23,41 +23,39 @@
 
         <h1 class="margin-base-vertical">An offline habit tracking sheet to be pinned on your fridge.</h1>
 
-        <div id=div_papersheet>
+        <div id="div_papersheet">
 <table>
   <tr>
     <td></td>
-    <td class=td_spacer></td>
+    <td class="td_spacer"></td>
     <td><h1>{{currentMonth}}</h1></td>
   </tr>
   <tr>
     <td class="td_name">{{nameDemo}}</td>
-    <td class=td_spacer></td>
+    <td class="td_spacer"></td>
     <td>
-<table class="table_days">
-  <tr>
-    <td ng-repeat="day in daysInMonth track by $index">{{$index+1}}</td>
-  </tr>
-</table>
-
-
+      <table class="table_days">
+        <tr>
+          <td ng-repeat="day in daysInMonth track by $index">{{$index+1}}</td>
+        </tr>
+      </table>
     </td>
   </tr>
   <tr class="td_third">
     <td>
-<table class="table_habits">
-  <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
-    <td ng-class="{'first':$first}">{{habit}}</td>
-  </tr>
-</table>
+      <table class="table_habits">
+        <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+          <td ng-class="{'first':$first}">{{habit}}</td>
+        </tr>
+      </table>
     </td>
     <td class=td_spacer></td>
     <td>
-<table class="table_checkboxes">
-  <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
-    <td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
-  </tr>
-</table>
+      <table class="table_checkboxes">
+        <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+          <td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
+        </tr>
+      </table>
     </td>
   </tr>
 
@@ -67,6 +65,8 @@
 
          <p class="text-center p-next-button">
            <button type="button" ng-click="clear();ctrl.step=2" class="btn btn-success btn-lg">Create your own</button>
+           <br>
+           <small>Language</small>
          </p>
 
       </div><!-- //main content -->
@@ -169,7 +169,7 @@
     </td>
   </tr>
 </table>
-        </div>
+
 
         <div class="margin-base-vertical onlyprint text-center">
           <small class="text-muted">
@@ -187,11 +187,42 @@
     </div><!-- //row -->
   </div> <!-- //container -->
 
-  <script src="http://cdn.openkeyval.org/statics/openkeyval.packed.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+  <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+
   <script>
-  function MainCtrl($scope) {
-    $scope.doPrint=false;
+
+  angular.module('PaperHabits', ['pascalprecht.translate'])
+    .config(['$translateProvider', function($translateProvider) {
+      $translateProvider.translations('en', {
+        TITLE: 'Hello',
+        FOO: 'This is a paragraph.',
+        BUTTON_LANG_EN: 'english',
+        BUTTON_LANG_DE: 'german'
+      })
+      .translations('de', {
+        TITLE: 'Hallo',
+        FOO: 'Dies ist ein Paragraph.',
+        BUTTON_LANG_EN: 'englisch',
+        BUTTON_LANG_DE: 'deutsch'
+      })
+      .registerAvailableLanguageKeys(['en', 'de'], {
+        'en_US': 'en',
+        'en_UK': 'en',
+        'de_DE': 'de',
+        'de_CH': 'de'
+      })
+      .determinePreferredLanguage();
+
+    }])
+    .controller('MainCtrl', MainCtrl);
+
+function MainCtrl($scope, $translate) {
+  $scope.doPrint=false;
+
+  $scope.changeLanguage = function (key) {
+    $translate.use(key);
+  };
 
 	var months = new Array(12);
 	months[0] = "January";
