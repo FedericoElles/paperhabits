@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="PaperHabits"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html ng-app="PaperHabits"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset='utf-8'>
   <title>Print Paper Habits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
@@ -21,14 +22,14 @@
     <div class="row noprint step1" ng-show="ctrl.step==1">
       <div class="col-md-6 col-md-offset-3 panel-default">
 
-        <h1 class="margin-base-vertical">An offline habit tracking sheet to be pinned on your fridge.</h1>
+        <h1 class="margin-base-vertical" ng-bind="'H1' | translate"></h1>
 
         <div id="div_papersheet">
 <table>
   <tr>
     <td></td>
     <td class="td_spacer"></td>
-    <td><h1>{{currentMonth}}</h1></td>
+    <td><h1 ng-bind="'MONTH_'+currentMonthId | translate ">{{currentMonth}}</h1></td>
   </tr>
   <tr>
     <td class="td_name">{{nameDemo}}</td>
@@ -45,7 +46,7 @@
     <td>
       <table class="table_habits">
         <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
-          <td ng-class="{'first':$first}">{{habit}}</td>
+          <td ng-class="{'first':$first}" ng-bind="'TEXT_SAMPLE_'+$index | translate">{{habit}}</td>
         </tr>
       </table>
     </td>
@@ -64,9 +65,13 @@
         </div>
 
          <p class="text-center p-next-button">
-           <button type="button" ng-click="clear();ctrl.step=2" class="btn btn-success btn-lg">Create your own</button>
+           <button type="button" ng-click="clear();ctrl.step=2" class="btn btn-success btn-lg" ng-bind="'BUTTON_CREATE' | translate"></button>
            <br>
-           <small>Language</small>
+           <small>Language 
+            <small ng-click="changeLanguage('en')" ng-bind="'BUTTON_LANG_EN' | translate"></small>
+            <small ng-click="changeLanguage('de')" ng-bind="'BUTTON_LANG_DE' | translate"></small>
+
+           </small>
          </p>
 
       </div><!-- //main content -->
@@ -189,141 +194,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
   <script src="bower_components/angular-translate/angular-translate.min.js"></script>
-
-  <script>
-
-  angular.module('PaperHabits', ['pascalprecht.translate'])
-    .config(['$translateProvider', function($translateProvider) {
-      $translateProvider.translations('en', {
-        TITLE: 'Hello',
-        FOO: 'This is a paragraph.',
-        BUTTON_LANG_EN: 'english',
-        BUTTON_LANG_DE: 'german'
-      })
-      .translations('de', {
-        TITLE: 'Hallo',
-        FOO: 'Dies ist ein Paragraph.',
-        BUTTON_LANG_EN: 'englisch',
-        BUTTON_LANG_DE: 'deutsch'
-      })
-      .registerAvailableLanguageKeys(['en', 'de'], {
-        'en_US': 'en',
-        'en_UK': 'en',
-        'de_DE': 'de',
-        'de_CH': 'de'
-      })
-      .determinePreferredLanguage();
-
-    }])
-    .controller('MainCtrl', MainCtrl);
-
-function MainCtrl($scope, $translate) {
-  $scope.doPrint=false;
-
-  $scope.changeLanguage = function (key) {
-    $translate.use(key);
-  };
-
-	var months = new Array(12);
-	months[0] = "January";
-	months[1] = "February";
-	months[2] = "March";
-	months[3] = "April";
-	months[4] = "May";
-	months[5] = "June";
-	months[6] = "July";
-	months[7] = "August";
-	months[8] = "September";
-	months[9] = "October";
-	months[10] = "November";
-	months[11] = "December";	
-	
-	$scope.currentMonth = months[new Date().getMonth()];		
-    $scope.ctrl = {
-       step:1 //debug
-    };
-
-    $scope.placeholders = [
-      'A first habit...',
-      'It takes two to tango...',
-      'Third habit...',
-      'Oh, getting overconfident...',
-      'This must be the last one!'
-    ];
-    $scope.habitsDemo = ['5 min exercise','Learn chinese','No alcohol','',''];
-	$scope.nameDemo = 'You';
-
-
-	function daysInMonth() {
-	   var d = new Date();
-	   return 32 - new Date(d.getFullYear(), d.getMonth(), 32).getDate();
-	}
-
-    $scope.isWeekend = function(day){
-      var d = new Date();
-      d.setDate(day);
-      var weekday = d.getDay();
-      return (weekday == 6) || (weekday == 0); 
-    }
-	
-	var addUser = function(){
-		$scope.users.push({
-			name:'',
-			habits:['','','','','']
-		});	
-	};
-	
-	$scope.users = [];
-	if (localStorage.getItem('data')){
-		var stage = JSON.parse(localStorage.getItem('data'));
-		for (var i=0,ii=stage.length;i<ii;i+=1){
-			if (stage[i].name && stage[i].habits[0]){
-				$scope.users.push(stage[i]);
-			}
-		}		
-	}
-	
-	if ($scope.users.length==0){
-		addUser();
-	}
-	
-	
-	
-	$scope.activeUser=0;
-	
-	$scope.activateUser = function(id){
-		$scope.activeUser = id;
-	};
-	
-	$scope.addUser=function(){
-		if ($scope.users[$scope.activeUser].name != '' && $scope.users[$scope.activeUser].habits[0] != ''){
-			addUser();
-			$scope.activeUser = $scope.users.length-1;
-		}
-	};
-
-	$scope.$watch('ctrl.step',function(newval,oldval){
-		if (oldval) {
-			$scope.save();
-		}
-	});
-	
-	$scope.save = function(){
-	    //delete empty data
-
-		
-		var data = JSON.stringify($scope.users);
-		localStorage.setItem('data',data);
-		//remoteStorage.setItem('data', data, function(){
-		//	console.log('Data saved');
-		//});
-	}
-
-
-    $scope.daysInMonth =  new Array(daysInMonth());
-        
-  }
-  
-  </script>
+  <script src="habits.js"></script>
   
 </body></html>
