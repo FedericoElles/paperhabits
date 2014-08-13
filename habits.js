@@ -20,7 +20,24 @@ angular.module('PaperHabits', ['pascalprecht.translate'])
         MONTH_10: 'November',
         MONTH_11: 'December',        
         BUTTON_LANG_EN: 'english',
-        BUTTON_LANG_DE: 'german'
+        BUTTON_LANG_DE: 'german',
+        //page 2
+        H2: 'Setup your goals!',
+        STEP: 'Step',
+        STEP_1_DESC: 'Enter up to 5 habits you want to develop this month. Keep it brief!',
+        STEP_2_DESC: 'Enter your nick, so everyone know it\'s your piece of paper.',
+        HABIT_PLACEHOLDER_0: 'A first habit...',
+        HABIT_PLACEHOLDER_1: 'It takes two to tango...',
+        HABIT_PLACEHOLDER_2: 'Third habit...',
+        HABIT_PLACEHOLDER_3: 'Oh, getting overconfident...',
+        HABIT_PLACEHOLDER_4: 'This must be the last one!',
+        NICK: 'Your nickname...',
+        HINT_PRINTER: 'Yeah, you actually need those old school screen to paper interfaces.',
+        BUTTON_PRINT: 'Print',
+        BUTTON_ADD_PERSON: 'Add person',
+        //page3
+        HINT_PRINT:'Ready to hit the print button. Click on the table to return to edit mode.',
+        MONTH_OVER:'Month over? Get your new sheet at'
       })
       .translations('de', {
         H1: 'Arbeite an Deinen positiven Gewohnheiten. Offline. Mit Deinem Kühlschrank',
@@ -42,7 +59,24 @@ angular.module('PaperHabits', ['pascalprecht.translate'])
         MONTH_10: 'November',
         MONTH_11: 'Dezember',           
         BUTTON_LANG_EN: 'englisch',
-        BUTTON_LANG_DE: 'deutsch'
+        BUTTON_LANG_DE: 'deutsch',
+        //page 2
+        H2: 'Erstelle Deine Ziele!',
+        STEP: 'Schritt',
+        STEP_1_DESC: 'Notiere bis zu 5 Gewohnheiten, die Du diesen Monat entwickeln möchtest.',
+        STEP_2_DESC: 'Nenne Deinen Namen, damit alle Wissen, dass es Dein Stück Papier ist.',
+        HABIT_PLACEHOLDER_0: 'Eine erste Gewohnheit...',
+        HABIT_PLACEHOLDER_1: 'Mit dem zweiten steht man ...',
+        HABIT_PLACEHOLDER_2: 'Dritte Gewohnheit...',
+        HABIT_PLACEHOLDER_3: 'So, werden wir übermütig...',
+        HABIT_PLACEHOLDER_4: 'Dies muss der letzte sein',
+        NICK: 'Dein Name...',
+        HINT_PRINTER: 'Yo, Du brauchst eines von diesen altertümlichen Bildschirm-zu-Papier Schnittstellen.',
+        BUTTON_PRINT: 'Drucken',
+        BUTTON_ADD_PERSON: 'Weitere Person',
+        //page3
+        HINT_PRINT:'Bereit zum Drucken. Klicke auf die Tabelle um diese zu editieren.',
+        MONTH_OVER:'Monat vorbei? Hole Dir Deinen neuen Zettel ab: '    
       })
       .registerAvailableLanguageKeys(['en', 'de'], {
         'en_US': 'en',
@@ -77,19 +111,12 @@ function MainCtrl($scope, $translate) {
 	months[11] = "December";	
 	
 	$scope.currentMonthId = new Date().getMonth();
-    $scope.ctrl = {
-       step:1 //debug
-    };
+  $scope.ctrl = {
+    step:1 //debug
+  };
 
-    $scope.placeholders = [
-      'A first habit...',
-      'It takes two to tango...',
-      'Third habit...',
-      'Oh, getting overconfident...',
-      'This must be the last one!'
-    ];
-    $scope.habitsDemo = ['5 min exercise','Learn chinese','No alcohol','',''];
-	$scope.nameDemo = 'You';
+  $scope.habitsDemo = ['','',''];
+	//$scope.nameDemo = 'You';
 
 
 	function daysInMonth() {

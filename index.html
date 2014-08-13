@@ -32,7 +32,7 @@
     <td><h1 ng-bind="'MONTH_'+currentMonthId | translate ">{{currentMonth}}</h1></td>
   </tr>
   <tr>
-    <td class="td_name">{{nameDemo}}</td>
+    <td class="td_name" ng-bind="'TEXT_YOUR_NAME' | translate"></td>
     <td class="td_spacer"></td>
     <td>
       <table class="table_days">
@@ -42,10 +42,10 @@
       </table>
     </td>
   </tr>
-  <tr class="td_third">
+  <tr class="td_third"> 
     <td>
       <table class="table_habits">
-        <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+        <tr ng-repeat="habit in [1,2,3] track by $index">
           <td ng-class="{'first':$first}" ng-bind="'TEXT_SAMPLE_'+$index | translate">{{habit}}</td>
         </tr>
       </table>
@@ -53,7 +53,7 @@
     <td class=td_spacer></td>
     <td>
       <table class="table_checkboxes">
-        <tr ng-repeat="habit in habitsDemo track by $index" ng-show="habit!=''">
+        <tr ng-repeat="habit in [1,2,3] track by $index">
           <td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
         </tr>
       </table>
@@ -80,44 +80,53 @@
     <div class="row noprint" ng-show="ctrl.step==2">
       <div class="col-md-6 col-md-offset-3 panel panel-default">
 
-        <h1 class="margin-base-vertical">
-          Setup your goals!
-        </h1>
-		<ul class="nav nav-tabs">
-		  <li ng-class="{active:activeUser==$index}" 
-		      ng-click="activateUser($index)"
-		      ng-repeat="user in users track by $index"><a href="" >
-				{{users[$index].name ||'Somebody'}}
-			  </a></li>
-		</ul>
+        <h1 class="margin-base-vertical" ng-bind="'H2' | translate"></h1>
+    <ul class="nav nav-tabs">
+      <li ng-class="{active:activeUser==$index}" 
+          ng-click="activateUser($index)"
+          ng-repeat="user in users track by $index"><a href="" >
+        {{users[$index].name ||'Somebody'}}
+        </a></li>
+    </ul>
 
         <form class="margin-base-vertical">
           <p>
-            <strong>Step #1</strong> Enter up to 5 habits you want to develop this month. Keep it brief!
+            <strong><span ng-bind="'STEP' | translate"></span> #1</strong> 
+            <span ng-bind="'STEP_1_DESC' | translate"></span>
           </p>
-          <p class="input-group" ng-repeat="habit in users[activeUser].habits track by $index" ng-show="$index==0 || users[activeUser].habits[$index-1]!=''">
+          <p class="input-group" 
+             ng-repeat="habit in users[activeUser].habits track by $index" 
+             ng-show="$index==0 || users[activeUser].habits[$index-1]!=''">
             <span class="input-group-addon"><span class="icon-check"></span></span>
-            <input maxlength="20" ng-trim="true" ng-maxlength="20" ng-model="users[activeUser].habits[$index]" type="text" class="form-control input-lg" placeholder="{{placeholders[$index]}}">
-			<span class="input-group-addon">{{20-users[activeUser].habits[$index].length}}</span>
+            <input maxlength="20" ng-trim="true" ng-maxlength="20" 
+                   ng-model="users[activeUser].habits[$index]" type="text" class="form-control input-lg" 
+                   placeholder="{{'HABIT_PLACEHOLDER_'+$index | translate}}">
+            <span class="input-group-addon">{{20-users[activeUser].habits[$index].length}}</span>
           </p>
           
           <p>
-            <strong>Step #2</strong> Enter your nick, so everyone know it's your piece of paper.
+            <strong><span ng-bind="'STEP' | translate"></span> #2</strong>
+            <span ng-bind="'STEP_2_DESC' | translate"></span>
           </p>
 
           
           <p class="input-group">
             <span class="input-group-addon"><span class="icon-user"></span></span>
-            <input maxlength="15" type="text" class="form-control input-lg" ng-model="users[activeUser].name" placeholder="Your nickname...">
+            <input maxlength="15" type="text" class="form-control input-lg" 
+                   ng-model="users[activeUser].name" placeholder="{{'NICK' | translate}}">
           </p>
           
-          <p class="help-block text-center"><small>Yeah, you actually need those old school screen to paper interfaces.</small></p>
+          <p class="help-block text-center"><small ng-bind="'HINT_PRINTER' | translate"></small></p>
           <p class="text-center">
-            <button type="button" ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
-			        ng-click="ctrl.step=3;doPrint=true" class="btn btn-success btn-lg">Print</button>
+            <button type="button" 
+                    ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
+                    ng-click="ctrl.step=3;doPrint=true" 
+                    class="btn btn-success btn-lg"
+                    ng-bind="'BUTTON_PRINT' | translate"></button>
             <button type="button" ng-click="addUser()" 
-			  ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
-			  class="btn btn-lg">Add person</button>
+                    ng-disabled="users[activeUser].name=='' || users[activeUser].habits[0]==''"
+                    class="btn btn-lg"
+                    ng-bind="'BUTTON_ADD_PERSON' | translate"></button>
           </p>
           
         </form>
@@ -129,63 +138,63 @@
 
     <div id="step3" class="row" ng-show="ctrl.step==3" ng-click="ctrl.step=2;doPrint=false">
       <div  ng-class="{'col-md-8 col-md-offset-2 panel panel-default':!doPrint}">
-		<p class="alert alert-info hidden-print">
-			Ready to hit the print button. Click on the table to return to edit mode.
-		</p>
+    <p class="alert alert-info hidden-print" ng-bind="'HINT_PRINT' | translate">
+    </p>
 
-        <div id=div_papersheet>
-		
-<table ng-repeat="user in users">
-  <tr>
-    <td></td>
-    <td class=td_spacer></td>
-    <td><h1 ng-show="$index==0">{{currentMonth}}</h1></td>
-  </tr>
-  <tr>
-    <td class="td_name">{{user.name}}</td>
-    <td class=td_spacer></td>
-    <td>
-		<table class="table_days">
-		  <tr>
-			<td  ng-repeat="day in daysInMonth track by $index">
-			 {{$index+1}}
-			</td>
-		  </tr>
-		</table>
+    <div id="div_papersheet">
+    
+      <table ng-repeat="user in users">
+        <tr>
+          <td></td>
+          <td class=td_spacer></td>
+          <td><h1 ng-show="$index==0">{{currentMonth}}</h1></td>
+        </tr>
+        <tr>
+          <td class="td_name">{{user.name}}</td>
+          <td class=td_spacer></td>
+          <td>
+          <table class="table_days">
+            <tr>
+            <td  ng-repeat="day in daysInMonth track by $index">
+             {{$index+1}}
+            </td>
+            </tr>
+          </table>
 
 
-	</td>
-  </tr>
-  <tr class="td_third">
-	<td>
-		<table class="table_habits">
-		  <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
-			<td ng-class="{'first':$first}">{{habit}}</td>
-		  </tr>
-		</table>
-			</td>
-			<td class=td_spacer></td>
-			<td>
-		<table class="table_checkboxes">
-		  <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
-			<td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
-		  </tr>
-		</table>
-    </td>
-  </tr>
-</table>
+        </td>
+        </tr>
+        <tr class="td_third">
+        <td>
+          <table class="table_habits">
+            <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
+            <td ng-class="{'first':$first}">{{habit}}</td>
+            </tr>
+          </table>
+        </td>
+        <td class=td_spacer></td>
+        <td>
+          <table class="table_checkboxes">
+            <tr ng-repeat="habit in user.habits track by $index" ng-show="habit!=''">
+            <td ng-class="{weekend:isWeekend($index+1)}" ng-repeat="day in daysInMonth track by $index">&nbsp;</td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
 
 
         <div class="margin-base-vertical onlyprint text-center">
           <small class="text-muted">
-            Month over? Get your new sheet at <a href="http://discomo.de/paperhabits">http://discomo.de/paperhabits</a>.
+            <span ng-bind="'MONTH_OVER' | translate"></span>
+            <a href="http://discomo.de/paperhabits">http://discomo.de/paperhabits</a>.
                 
           </small>
         </div>
 
 
         <div class="margin-base-vertical noprint">
-          <small class="text-muted">Created by Federico Elles</small>
+          <small class="text-muted">Created by discomo.de</small>
         </div>
 
       </div><!-- //main content -->
