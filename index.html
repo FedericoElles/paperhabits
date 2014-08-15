@@ -29,7 +29,7 @@
   <tr>
     <td></td>
     <td class="td_spacer"></td>
-    <td><h1 ng-bind="'MONTH_'+currentMonthId | translate ">{{currentMonth}}</h1></td>
+    <td><h1 ng-bind="'MONTH_'+currentMonthId | translate "></h1></td>
   </tr>
   <tr>
     <td class="td_name" ng-bind="'TEXT_YOUR_NAME' | translate"></td>
@@ -147,7 +147,7 @@
         <tr>
           <td></td>
           <td class=td_spacer></td>
-          <td><h1 ng-show="$index==0">{{currentMonth}}</h1></td>
+          <td><h1 ng-show="$index==0" ng-bind="'MONTH_'+currentMonthId | translate "></h1></td>
         </tr>
         <tr>
           <td class="td_name">{{user.name}}</td>

@@ -155,16 +155,28 @@ form {
 
 
 #div_papersheet .table_days{
-  font-color:#DDD;
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 0 #DDD;  
 }
+
 
 #div_papersheet .table_days td{
   width:15px;
   vertical-align:bottom;
   text-align:center;
-  color:#CCC;
-  border:1px solid #FFF;
+  color: rgba(255, 255, 255, 0);
+  text-shadow: 0 0 0 #CCC;    
+  border:1px solid  rgba(255, 255, 255, 0);
 }
+
+/*  @media print {*/
+@media print and (-webkit-min-device-pixel-ratio:0) {
+  #div_papersheet .table_days td {
+    color: #ccc;
+    -webkit-print-color-adjust: exact;
+  }
+}
+/*   }*/
 
 body.print #div_papersheet .table_days td{
   width:22px;
@@ -194,7 +206,8 @@ body.print #div_papersheet .table_habits td{
 }
 
 #div_papersheet .table_checkboxes{
-  font-color:grey;
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 0 #CCC;    
   border-collapse:collapse;  
 }
 
