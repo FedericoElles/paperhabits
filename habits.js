@@ -1,83 +1,12 @@
-angular.module('PaperHabits', ['pascalprecht.translate'])
+angular.module('PaperHabits', ['pascalprecht.translate',
+                               'ngGSpreadsheet',
+                               'pubnub.angular.service'])
     .config(['$translateProvider', function($translateProvider) {
-      $translateProvider.translations('en', {
-        H1: 'An offline habit tracking sheet to be pinned on your fridge.',
-        BUTTON_CREATE: 'Create your own',
-        TEXT_YOUR_NAME : 'You',
-        TEXT_SAMPLE_0: '5 min exercise',
-        TEXT_SAMPLE_1: 'Learn chinese',
-        TEXT_SAMPLE_2: 'No alcohol',
-        MONTH_0: 'January',
-        MONTH_1: 'February',
-        MONTH_2: 'March',
-        MONTH_3: 'April',
-        MONTH_4: 'May',
-        MONTH_5: 'June',
-        MONTH_6: 'July',
-        MONTH_7: 'August',
-        MONTH_8: 'September',
-        MONTH_9: 'October',
-        MONTH_10: 'November',
-        MONTH_11: 'December',        
-        BUTTON_LANG_EN: 'english',
-        BUTTON_LANG_DE: 'german',
-        //page 2
-        H2: 'Setup your goals!',
-        STEP: 'Step',
-        STEP_1_DESC: 'Enter up to 5 habits you want to develop this month. Keep it brief!',
-        STEP_2_DESC: 'Enter your nick, so everyone know it\'s your piece of paper.',
-        HABIT_PLACEHOLDER_0: 'A first habit...',
-        HABIT_PLACEHOLDER_1: 'It takes two to tango...',
-        HABIT_PLACEHOLDER_2: 'Third habit...',
-        HABIT_PLACEHOLDER_3: 'Oh, getting overconfident...',
-        HABIT_PLACEHOLDER_4: 'This must be the last one!',
-        NICK: 'Your nickname...',
-        HINT_PRINTER: 'Yeah, you actually need those old school screen to paper interfaces.',
-        BUTTON_PRINT: 'Print',
-        BUTTON_ADD_PERSON: 'Add person',
-        //page3
-        HINT_PRINT:'Ready to hit the print button. Click on the table to return to edit mode.',
-        MONTH_OVER:'Month over? Get your new sheet at'
+      $translateProvider.useLoader('googleSpreadsheetLoader', {
+        id: '1-NlVCXRNeLTc4YTyvChdGGlNnXsqqIvc96Rzltcm-kU', //ADD MISSING INFORMATION HERE
+        sheet: 1
       })
-      .translations('de', {
-        H1: 'Arbeite an Deinen positiven Gewohnheiten. Offline. Mit Deinem Kühlschrank',
-        BUTTON_CREATE: 'Erstelle Deine Tabelle',
-        TEXT_YOUR_NAME : 'Du',
-        TEXT_SAMPLE_0: '5 Minuten Training',
-        TEXT_SAMPLE_1: 'Lerne Spanisch',
-        TEXT_SAMPLE_2: 'Kein Alkohol',
-        MONTH_0: 'Januar',
-        MONTH_1: 'Februar',
-        MONTH_2: 'März',
-        MONTH_3: 'April',
-        MONTH_4: 'Mai',
-        MONTH_5: 'Juni',
-        MONTH_6: 'Juli',
-        MONTH_7: 'August',
-        MONTH_8: 'September',
-        MONTH_9: 'Oktober',
-        MONTH_10: 'November',
-        MONTH_11: 'Dezember',           
-        BUTTON_LANG_EN: 'englisch',
-        BUTTON_LANG_DE: 'deutsch',
-        //page 2
-        H2: 'Erstelle Deine Ziele!',
-        STEP: 'Schritt',
-        STEP_1_DESC: 'Notiere bis zu 5 Gewohnheiten, die Du diesen Monat entwickeln möchtest.',
-        STEP_2_DESC: 'Nenne Deinen Namen, damit alle Wissen, dass es Dein Stück Papier ist.',
-        HABIT_PLACEHOLDER_0: 'Eine erste Gewohnheit...',
-        HABIT_PLACEHOLDER_1: 'Mit dem zweiten steht man ...',
-        HABIT_PLACEHOLDER_2: 'Dritte Gewohnheit...',
-        HABIT_PLACEHOLDER_3: 'So, werden wir übermütig...',
-        HABIT_PLACEHOLDER_4: 'Dies muss der letzte sein',
-        NICK: 'Dein Name...',
-        HINT_PRINTER: 'Yo, Du brauchst eines von diesen altertümlichen Bildschirm-zu-Papier Schnittstellen.',
-        BUTTON_PRINT: 'Drucken',
-        BUTTON_ADD_PERSON: 'Weitere Person',
-        //page3
-        HINT_PRINT:'Bereit zum Drucken. Klicke auf die Tabelle um diese zu editieren.',
-        MONTH_OVER:'Monat vorbei? Hole Dir Deinen neuen Zettel ab: '    
-      })
+
       .registerAvailableLanguageKeys(['en', 'de'], {
         'en_US': 'en',
         'en_UK': 'en',
