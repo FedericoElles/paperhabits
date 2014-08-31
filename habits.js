@@ -16,6 +16,31 @@ angular.module('PaperHabits', ['pascalprecht.translate',
       .determinePreferredLanguage();
 
     }])
+    .run(function($rootScope, $translate, PubNub, translationBuffer){
+
+      //connect to PubNub
+      PubNub.init({
+        subscribe_key: 'sub-c-7c524646-313d-11e4-9846-02ee2ddab7fe',
+        publish_key: 'pub-c-57fde7c8-7b82-4124-8b49-b657e117337b'
+      });
+
+      //Subscribe to 'translate' channel
+      PubNub.ngSubscribe({ channel: 'translate' });
+
+      //Update translation on message
+      $rootScope.$on(PubNub.ngMsgEv('translate'), function(ngEvent, payload) {
+        var params = payload.message.split('___');
+
+        //console.log('New Translation arrived:', payload.message, params);
+        //Update translation Buffer with new translation value
+        translationBuffer.update(params[0], params[1], params[2]);
+
+        //Tell angular-translate to fetch new translations from 
+        $translate.refresh();
+      });
+
+
+    })
     .controller('MainCtrl', MainCtrl);
 
 function MainCtrl($scope, $translate) {
