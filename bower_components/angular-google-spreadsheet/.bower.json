@@ -1,0 +1,15 @@
+{
+  "name": "angular-google-spreadsheet",
+  "homepage": "https://github.com/FedericoElles/angular-google-spreadsheet",
+  "version": "1.1.0",
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "349b2d804ec191e3c1a8691fa7cf341876dd1e5f"
+  },
+  "_source": "git://github.com/FedericoElles/angular-google-spreadsheet.git",
+  "_target": "~1.1.0",
+  "_originalSource": "angular-google-spreadsheet",
+  "_direct": true
+}
